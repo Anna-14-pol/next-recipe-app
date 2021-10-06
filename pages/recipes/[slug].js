@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
+import { useRouter } from "next/dist/client/router";
 import { useState } from "react";
 import {
   sanityClient,
@@ -27,6 +29,12 @@ const recipeQuery = `*[_type == "recipe" && slug.current == $slug][0]{
 }`;
 
 export default function OneRecipe({ data }) {
+  const router = useRouter()
+
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
+
   const [likes, setLikes] = useState(data?.recipe?.likes);
   const { recipe } = data;
 
