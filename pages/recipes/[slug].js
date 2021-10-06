@@ -46,7 +46,7 @@ export default function OneRecipe({ data }) {
       <h1>{recipe.name}</h1>
 
       <button className="like-button" onClick={addLikes}>
-        {likes} :heart_eyes:
+        {likes} ❤️
       </button>
 
       <main className="content">
@@ -90,9 +90,5 @@ export async function getStaticProps({ params }) {
   const { slug } = params;
   const recipe = await sanityClient.fetch(recipeQuery, { slug });
 
-  return {
-    props: {
-      data: { recipe },
-    },
-  };
+  return { props: { data: { recipe } } };
 }
