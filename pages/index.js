@@ -1,8 +1,11 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+import styles from "../styles/Home.module.css";
 
-export default function Home() {
+export default function Home({ data }) {
+  const recipes = data.recipes;
+
   return (
     <div className={styles.container}>
       <Head>
@@ -17,8 +20,12 @@ export default function Home() {
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+          Get started by editing{" "}
+          <code className={styles.code}>
+            <Link href="/about">
+              <a>{recipes[0].title}</a>
+            </Link>
+          </code>
         </p>
 
         <div className={styles.grid}>
@@ -58,12 +65,22 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
       </footer>
     </div>
-  )
+  );
+}
+
+export function getStaticProps() {
+  return {
+    props: {
+      data: {
+        recipes: [{ title: "Pineapple Smoothie" }],
+      },
+    },
+  };
 }
