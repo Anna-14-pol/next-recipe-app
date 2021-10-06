@@ -105,5 +105,13 @@ export default {
         },
       ],
     },
+    {
+      name: "likes",
+      title: "Likes",
+      type: "number",
+    },
   ],
+  initialVaue: {
+    likes: 0,
+  },
 };

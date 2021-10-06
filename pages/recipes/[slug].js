@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
+import { useState } from "react";
 import {
   sanityClient,
   urlFor,
@@ -26,11 +27,27 @@ const recipeQuery = `*[_type == "recipe" && slug.current == $slug][0]{
 }`;
 
 export default function OneRecipe({ data }) {
+  const [likes, setLikes] = useState(data?.recipe?.likes);
   const { recipe } = data;
+
+  const addLikes = async () => {
+    const res = await fetch("/api/handle-like", {
+      method: "POST",
+      body: JSON.stringify({ _id: recipe._id }),
+    }).catch((error) => console.log(error));
+
+    const data = await res.json();
+
+    setLikes(data.likes);
+  };
 
   return (
     <article className="recipe">
       <h1>{recipe.name}</h1>
+
+      <button className="like-button" onClick={addLikes}>
+        {likes} :heart_eyes:
+      </button>
 
       <main className="content">
         <img src={urlFor(recipe?.mainImage).url()} alt={recipe.name} />
